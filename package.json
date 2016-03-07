@@ -1,0 +1,22 @@
+{
+  "name": "bonjour",
+  "version": "1.0.0",
+  "description": "Bonojur microservice running on NodeJS",
+  "main": "bonjour.js",
+  "scripts": {
+    "start": "node bonjour.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redhat-helloworld-msa/bonjour.git"
+  },
+  "author": "developer@redhat.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/redhat-helloworld-msa/bonjour/issues"
+  },
+  "homepage": "https://github.com/redhat-helloworld-msa/bonjour#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
