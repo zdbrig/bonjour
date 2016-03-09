@@ -21,6 +21,7 @@ var app = express();
 
 
 app.get('/bonjour', function(req,resp){
+  resp.set('Access-Control-Allow-Origin', '*');
   resp.send("Bonjour de " + os.hostname());
 });
 
