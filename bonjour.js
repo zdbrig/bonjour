@@ -16,18 +16,41 @@
  */
 
 var express = require('express');
+var request = require('request');
 var os = require('os');
 var app = express();
 
+function define_cors(resp){
+    resp.set('Access-Control-Allow-Origin', '*');
+}
 
-app.get('/bonjour', function(req,resp){
-  resp.set('Access-Control-Allow-Origin', '*');
-  resp.send("Bonjour de " + os.hostname());
+function say_bonjour(){
+    return "Bonjour de " + os.hostname();
+}
+
+app.get('/bonjour', function(req, resp) {
+    define_cors(resp);
+    resp.send(say_bonjour());
 });
 
-var server = app.listen(8080,  '0.0.0.0', function(){
-  var host = server.address().address
-  var port = server.address().port
+app.get('/bonjour-chaining', function(req, resp) {
+    define_cors(resp);
+    request('http://aloha:8080/aloha', function(error, response, body) {
+        var aloha_return;
+        if (!error && response.statusCode == 200) {
+            aloha_return = body;
+        }else{
+            aloha_return = "Error connecting to [aloha] service - Error Code: [" + error.code + "]";
+        }
+        replies.push(say_bonjour());
+        replies.push(aloha_return);
+        resp.send(JSON.stringify(replies));
+    })
+});
 
-  console.log("Bonjour service running at http://%s:%s", host, port)
+var server = app.listen(8080, '0.0.0.0', function() {
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("Bonjour service running at http://%s:%s", host, port)
 });
