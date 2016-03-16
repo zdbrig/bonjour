@@ -35,7 +35,8 @@ app.get('/bonjour', function(req, resp) {
 
 app.get('/bonjour-chaining', function(req, resp) {
     define_cors(resp);
-    request('http://aloha:8080/aloha', function(error, response, body) {
+    request('http://aloha:8080/aloha', {timeout: 2000}, function(error, response, body) {
+        var replies = [];
         var aloha_return;
         if (!error && response.statusCode == 200) {
             aloha_return = body;
