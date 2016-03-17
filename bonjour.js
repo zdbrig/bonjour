@@ -41,7 +41,7 @@ app.get('/bonjour-chaining', function(req, resp) {
         if (!error && response.statusCode == 200) {
             aloha_return = body;
         }else{
-            aloha_return = "Error connecting to [aloha] service - Error Code: [" + error.code + "]";
+            aloha_return = "Generic Aloha response";
         }
         replies.push(say_bonjour());
         replies.push(aloha_return);
