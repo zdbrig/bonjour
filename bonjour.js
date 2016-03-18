@@ -35,13 +35,13 @@ app.get('/api/bonjour', function(req, resp) {
 
 app.get('/api/bonjour-chaining', function(req, resp) {
     define_cors(resp);
-    request('http://aloha:8080/aloha', {timeout: 2000}, function(error, response, body) {
+    request('http://aloha:8080/api/aloha', {timeout: 2000}, function(error, response, body) {
         var replies = [];
         var aloha_return;
         if (!error && response.statusCode == 200) {
             aloha_return = body;
         }else{
-            aloha_return = "Generic Aloha response";
+            aloha_return = "Generic Aloha response (FallBack!)";
         }
         replies.push(say_bonjour());
         replies.push(aloha_return);
