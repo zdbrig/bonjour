@@ -28,12 +28,12 @@ function say_bonjour(){
     return "Bonjour de " + os.hostname();
 }
 
-app.get('/bonjour', function(req, resp) {
+app.get('/api/bonjour', function(req, resp) {
     define_cors(resp);
     resp.send(say_bonjour());
 });
 
-app.get('/bonjour-chaining', function(req, resp) {
+app.get('/api/bonjour-chaining', function(req, resp) {
     define_cors(resp);
     request('http://aloha:8080/aloha', {timeout: 2000}, function(error, response, body) {
         var replies = [];
