@@ -16,37 +16,16 @@
  */
 
 var express = require('express');
-var request = require('request');
 var os = require('os');
 var app = express();
-
-function define_cors(resp){
-    resp.set('Access-Control-Allow-Origin', '*');
-}
 
 function say_bonjour(){
     return "Bonjour de " + os.hostname();
 }
 
 app.get('/api/bonjour', function(req, resp) {
-    define_cors(resp);
+    resp.set('Access-Control-Allow-Origin', '*');
     resp.send(say_bonjour());
-});
-
-app.get('/api/bonjour-chaining', function(req, resp) {
-    define_cors(resp);
-    request('http://aloha:8080/api/aloha', {timeout: 2000}, function(error, response, body) {
-        var replies = [];
-        var aloha_return;
-        if (!error && response.statusCode == 200) {
-            aloha_return = body;
-        }else{
-            aloha_return = "Generic Aloha response (FallBack!)";
-        }
-        replies.push(say_bonjour());
-        replies.push(aloha_return);
-        resp.send(JSON.stringify(replies));
-    })
 });
 
 var server = app.listen(8080, '0.0.0.0', function() {
