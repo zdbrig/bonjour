@@ -28,6 +28,11 @@ app.get('/api/bonjour', function(req, resp) {
     resp.send(say_bonjour());
 });
 
+app.get('/api/health', function(req, resp) {
+    resp.set('Access-Control-Allow-Origin', '*');
+    resp.send("I'm ok");
+});
+
 var server = app.listen(8080, '0.0.0.0', function() {
     var host = server.address().address
     var port = server.address().port
