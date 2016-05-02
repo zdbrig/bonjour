@@ -1,8 +1,11 @@
 # bonjour
-Hello microservice using NodeJS
+Bonjour microservice using NodeJS
 
-Execute bonjour
----------------
+The detailed instructions to run *Red Hat Helloworld MSA* demo, can be found at the following repository: <https://github.com/redhat-helloworld-msa/helloworld-msa>
+
+
+Execute bonjour locally
+-----------------------
 
 1. Open a command prompt and navigate to the root directory of this microservice.
 2. Type this command to install the dependencies
@@ -14,11 +17,5 @@ Execute bonjour
         npm start
 
 4. This will execute `bonjour.js` .
-
-Access the application
-----------------------
-
-The application will be running at the following URL:
-
-http://localhost:8080/api/bonjour
+5. The application will be running at the following URL: <http://localhost:8080/api/bonjour>
 
