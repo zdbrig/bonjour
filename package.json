@@ -1,7 +1,7 @@
 {
   "name": "bonjour",
   "version": "1.0.0",
-  "description": "Bonojur microservice running on NodeJS",
+  "description": "Bonjour microservice running on NodeJS",
   "main": "bonjour.js",
   "scripts": {
     "start": "node bonjour.js"
