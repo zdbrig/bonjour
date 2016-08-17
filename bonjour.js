@@ -33,13 +33,13 @@ const tracer = new Tracer({
 	recorder,
 	ctxImpl // this would typically be a CLSContext or ExplicitContext
 });
-	
+
 var os = require('os');
 var app = express();
 
 app.use(zipkinMiddleware({
 	tracer,
-	serviceName: 'bonjour-service' // name of this application
+	serviceName: 'bonjour' // name of this application
 }));
 
 function say_bonjour(){
