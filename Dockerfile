@@ -1,2 +1,2 @@
-FROM ryanj/centos7-nodejs:6.3.1
+FROM ryanj/centos7-nodejs:6.4.0
 ENV ZIPKIN_SERVER_URL="http://zipkin-query:9411"
