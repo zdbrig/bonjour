@@ -16,13 +16,17 @@
  */
 // jshint esnext: true
 
-// zipkin-related
 const express = require('express');
+const fs = require('fs');
+const session = require('express-session');
+const Keycloak = require('keycloak-connect');
 const {Tracer, ExplicitContext, BatchRecorder, ConsoleRecorder} = require('zipkin');
 const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
-
 const ctxImpl = new ExplicitContext();
 const {HttpLogger} = require('zipkin-transport-http');
+var os = require('os');
+var app = express();
+var Config = require('keycloak-auth-utils').Config;
 
 var recorder;
 if (process.env.ZIPKIN_SERVER_URL === undefined) {
@@ -41,13 +45,35 @@ const tracer = new Tracer({
   ctxImpl // this would typically be a CLSContext or ExplicitContext
 });
 
-var os = require('os');
-var app = express();
+
+// Create a session-store to be used by both the express-session
+// middleware and the keycloak middleware.
+
+var memoryStore = new session.MemoryStore();
+
+app.use(session({
+  secret: 'mySecret',
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
+}));
 
 app.use(zipkinMiddleware({
   tracer,
   serviceName: 'bonjour' // name of this application
 }));
+
+//Configure keycloak based on keycloak.json and the KEYCLOAK_AUTH_SERVER_URL env var
+const custonKeyCloakConfig = JSON.parse(fs.readFileSync('keycloak.json').toString());
+custonKeyCloakConfig.authServerUrl = process.env.KEYCLOAK_AUTH_SERVER_URL;
+
+const keycloak = new Keycloak({ scope: 'USERS', store: memoryStore}, custonKeyCloakConfig);
+
+app.use( keycloak.middleware( { logout: '/api/logout' } ));
+
+app.get('/', function (req, res) {
+  res.send('Logged out');
+});
 
 function say_bonjour () {
   return 'Bonjour de ' + os.hostname();
@@ -57,6 +83,13 @@ app.get('/api/bonjour', function (req, resp) {
   resp.set('Access-Control-Allow-Origin', '*');
   resp.send(say_bonjour());
 });
+
+app.get( '/api/bonjour-secured', keycloak.protect(), function (req, resp) {
+  resp.set('Access-Control-Allow-Origin', '*');
+  resp.send("This is a Secured resource. You're logged as " + req.kauth.grant.access_token.content.name);
+} );
+
+
 
 app.get('/api/health', function (req, resp) {
   resp.set('Access-Control-Allow-Origin', '*');
