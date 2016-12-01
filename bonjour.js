@@ -71,6 +71,12 @@ const keycloak = new Keycloak({ scope: 'USERS', store: memoryStore}, custonKeyCl
 
 app.use( keycloak.middleware( { logout: '/api/logout' } ));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
+
 app.get('/', function (req, res) {
   res.send('Logged out');
 });
@@ -80,12 +86,10 @@ function say_bonjour () {
 }
 
 app.get('/api/bonjour', function (req, resp) {
-  resp.set('Access-Control-Allow-Origin', '*');
   resp.send(say_bonjour());
 });
 
 app.get( '/api/bonjour-secured', keycloak.protect(), function (req, resp) {
-  resp.set('Access-Control-Allow-Origin', '*');
   resp.send("This is a Secured resource. You're logged as " + req.kauth.grant.access_token.content.name);
 } );
 
