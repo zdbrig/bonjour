@@ -22,7 +22,7 @@ const api = require('./lib/api');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/swagger')));
 
 // Create a session-store to be used by both the express-session
 // middleware and the keycloak middleware.
