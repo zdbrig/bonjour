@@ -19,19 +19,19 @@ Execute bonjour locally
 4. This will execute `bonjour.js` .
 5. The application will be running at the following URL: <http://localhost:8080/api/bonjour>
 
-Run bonjour in OpenShift
-------------------------
 
-You will need to be logged into a running OpenShift instance.
+Execute bonjour locally with Docker
+-----------------------------------
 
-1. Install dependencies
+1. Build the Docker image:
 
-```sh
-$ npm install
-```
+        docker build -t bonjour .
 
-2. Deploy to OpenShift
+2. Run the Docker image:
 
-```sh
-$ npm run openshift
-```
+        docker run -p 8080:8080 bonjour
+
+3. The application will be running at: <http://localhost:8080/api/bonjour>
+
+
+

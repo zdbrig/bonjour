@@ -70,24 +70,10 @@
       }
     },
 
-    "/api/health/readiness": {
-      "get": {
-        "summary": "Verifies that this microservice is ready to receive requests.",
-        "description": "Confirms the service is operational",
-        "produces": [ "text/plain" ],
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
 
-    "/api/health/liveness": {
+    "/api/health": {
       "get": {
-        "summary": "Verifies that this microservice is running and responsive.",
+        "summary": "Verifies the health of this microservice.",
         "description": "Confirms the service is operational",
         "produces": [ "text/plain" ],
         "responses": {
