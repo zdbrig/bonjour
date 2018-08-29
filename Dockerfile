@@ -1,11 +1,11 @@
-FROM node:8
+FROM bucharestgold/centos7-s2i-nodejs:10.x
 
-WORKDIR /usr/src/
+WORKDIR /opt/app-root/src
 
 EXPOSE 8080
 
-COPY package.json /usr/src/
-COPY . /usr/src/
+COPY package.json /opt/app-root/src
+COPY . /opt/app-root/src
 RUN npm -s install
 
 # Run it
